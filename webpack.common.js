@@ -4,7 +4,6 @@ const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // .envファイルから環境変数を読み込む
@@ -27,7 +26,6 @@ module.exports = {
   plugins: [
     new webpack.ProgressPlugin(),
     new CleanWebpackPlugin(),
-    new HardSourceWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html',
@@ -60,7 +58,7 @@ module.exports = {
         },
       },
       {
-        test: /.scss$/,
+        test: /\.(css|sass|scss)/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -74,11 +72,6 @@ module.exports = {
           },
           {
             loader: 'postcss-loader',
-            options: {
-              plugins() {
-                return [autoprefixer]
-              },
-            },
           },
           {
             loader: 'sass-loader',
